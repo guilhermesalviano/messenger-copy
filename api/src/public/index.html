@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script>
-        const io = require('socket.io')(80);
-        const socket = io();
+        const socket = io('http://localhost:3333');
         function ola() {
+            socket.emit('change_user', 'guibs');
             socket.emit('message', 'olá');
         }
         ola();

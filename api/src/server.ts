@@ -17,6 +17,10 @@ io.on('connection', (socket: any) => {
     socket.on('message', (msg: string) => {
         console.log('message: ' + msg);
     });
+
+    socket.on('change_user', (msg: string) => {
+        console.log('user: ' + msg);
+    });
 });
   
 http.listen(3333, () => {
