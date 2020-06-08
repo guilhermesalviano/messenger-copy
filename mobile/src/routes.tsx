@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const AppStack = createStackNavigator();
 
 import Home from './pages/Home';
+import Chat from './pages/Chat';
 
 const Routes = () => {
     return (
@@ -15,6 +16,7 @@ const Routes = () => {
                     backgroundColor: '#f0f0f5',
             }}}>
                 <AppStack.Screen  name="Home" component={Home} />
+                <AppStack.Screen  name="Chat" component={Chat} />
             </AppStack.Navigator>
         </NavigationContainer>
     );

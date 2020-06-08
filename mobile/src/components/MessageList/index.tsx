@@ -1,30 +1,17 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const MessageList = () => {
+    const navigation = useNavigation();
+
+    function handleOpenChat() {
+        navigation.navigate('Chat');
+    }
+
     return (
         <>
-            <TouchableOpacity style={styles.container}>
-                <Image
-                    style={styles.tinyImageStory}
-                    source={require("../../assets/triste-eu.jpeg")}
-                />
-                <View style={styles.containerText}>
-                    <View style={styles.containerName}>
-                        <Text style={styles.name}>
-                            Guilherme Farias
-                        </Text>
-                        <Text style={styles.hour}>
-                            10 AM
-                        </Text>
-                    </View>
-                    <Text style={styles.message}>
-                        Olá Pessoa
-                    </Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={handleOpenChat}>
                 <Image
                     style={styles.tinyImageStory}
                     source={require("../../assets/triste-eu.jpeg")}
