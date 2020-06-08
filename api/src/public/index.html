@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste chat</title>
+    <script>
+        const io = require('socket.io')(80);
+        const socket = io();
+        function ola() {
+            socket.emit('message', 'olá');
+        }
+        ola();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
