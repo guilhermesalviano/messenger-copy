@@ -14,20 +14,20 @@ const MessageList = () => {
             <TouchableOpacity style={styles.container} onPress={handleOpenChat}>
                 <Image
                     style={styles.tinyImageStory}
-                    source={require("../../assets/triste-eu.jpeg")}
+                    source={{uri: 'https://mega.ibxk.com.br///2016/06/24/24150552292198.jpg?w=1200&h=480&mode=crop'}}
                 />
                 <View style={styles.containerText}>
                     <View style={styles.containerName}>
                         <Text style={styles.name}>
-                            Guilherme Farias
+                            Jubiscleiton
                         </Text>
                         <Text style={styles.hour}>
-                            10 AM
+                            {new Date().getHours() < 12? new Date().getHours().toString()+ ' AM' : new Date().getHours().toString()+ ' PM' }
                         </Text>
                     </View>
-                    <Text style={styles.message}>
+                    {/* <Text style={styles.message}>
                         Olá Pessoa
-                    </Text>
+                    </Text> */}
                 </View>
             </TouchableOpacity>
         </>

@@ -15,9 +15,9 @@ const ChatHeader = () => {
                 <TouchableOpacity onPress={handleBack}>
                     <Icon name="chevron-left" size={35} color="#3b5998" />
                 </TouchableOpacity>
-                <Image style={styles.tinyImageStory} source={require("../../assets/triste-eu.jpeg")} />
+                <Image style={styles.tinyImageStory} source={{uri: 'https://mega.ibxk.com.br///2016/06/24/24150552292198.jpg?w=1200&h=480&mode=crop'}} />
                 <View style={styles.containerName}>
-                    <Text style={styles.name}>Guilherme Farias</Text>
+                    <Text style={styles.name}>Jubiscleiton</Text>
                     <Text style={styles.nameDescription}><View style={styles.isOnline}></View> Online agora</Text>
                 </View>
                 <Icon name="more-vert" size={35} color="#3b5998" />

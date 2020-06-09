@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Topbar />
-            <Story />
+            {/* <Story /> */}
             <MessageList />
             <NewMessage />
         </SafeAreaView>
