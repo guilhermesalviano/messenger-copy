@@ -4,13 +4,22 @@ import knex from '../database/connection';
 class MessageController {
     async index(request: Request, response: Response) {
         const {from_user_id, to_user_id} = request.query;
-        const messages = await knex('messages').where('from_user_id', String(from_user_id)).where('to_user_id', String(to_user_id)).select('*');
+        const messages = await knex('messages')
+            .where('from_user_id', String(from_user_id))
+            .where('to_user_id', String(to_user_id))
+            .orderBy('createdAt', 'desc')
+            // .limit(2)
+            .select('*');
         return response.json(messages);
     }
 
     async show(request: Request, response: Response) {
         const {from_user_id, to_user_id} = request.params;
-        const message = await knex('messages').where('from_user_id', 1).where('to_user_id', 2).select('*');
+        const message = await knex('messages')
+            .where('from_user_id', 1)
+            .where('to_user_id', 2)
+            .orderBy('createdAt', 'desc')
+            .select('*');
         return response.json(message);
     }
 
