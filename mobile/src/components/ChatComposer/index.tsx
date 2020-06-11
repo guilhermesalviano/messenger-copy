@@ -31,9 +31,8 @@ const ChatComposer = (props: any) => {
         return;
     }
 
-    const onSend = async (newMessages= []) => {
-        // console.log(newMessages[0]);
-        const {_id, createdAt, received, sent, text, user} = { ...newMessages[0], sent: true, received: true };
+    const onSend = async (newMessages: any) => {
+        const {_id, createdAt, received, sent, text, user} = { ...newMessages[0] as IMessage, sent: true, received: true };
         const sentDate = `${new Date(createdAt).toISOString().replace('T', ' ').substring(0,(new Date(createdAt).toISOString().replace('T', ' ').length -5))}`;
         const data = {
             _id,
@@ -67,7 +66,7 @@ const ChatComposer = (props: any) => {
                     user: {
                       _id: from_user_id,
                       name: 'React Native',
-                      avatar: 'https://facebook.github.io/react/img/logo_og.png',
+                      avatar: 'https://scontent.fcgh34-1.fna.fbcdn.net/v/t1.0-9/98979178_1174596953001783_7408037421243170816_n.jpg?_nc_cat=101&_nc_sid=85a577&_nc_ohc=Fg254BlNaXkAX_Qo_Bj&_nc_ht=scontent.fcgh34-1.fna&oh=6173f69f224064eec9fcb5189e35c392&oe=5F06673F',
                     },
                     image,
                     video,
