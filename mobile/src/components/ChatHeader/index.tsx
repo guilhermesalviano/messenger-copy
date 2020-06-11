@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
 
-const ChatHeader = () => {
+const ChatHeader = (props: any) => {
     const navigation = useNavigation();
     function handleBack() {
         navigation.goBack();
@@ -15,9 +15,9 @@ const ChatHeader = () => {
                 <TouchableOpacity onPress={handleBack}>
                     <Icon name="chevron-left" size={35} color="#3b5998" />
                 </TouchableOpacity>
-                <Image style={styles.tinyImageStory} source={{uri: 'https://scontent.fcgh34-1.fna.fbcdn.net/v/t1.0-9/98979178_1174596953001783_7408037421243170816_n.jpg?_nc_cat=101&_nc_sid=85a577&_nc_ohc=Fg254BlNaXkAX_Qo_Bj&_nc_ht=scontent.fcgh34-1.fna&oh=6173f69f224064eec9fcb5189e35c392&oe=5F06673F'}} />
+                <Image style={styles.tinyImageStory} source={{uri: props.toUser.avatar}} />
                 <View style={styles.containerName}>
-                    <Text style={styles.name}>Guibs</Text>
+                    <Text style={styles.name}>{props.toUser.name}</Text>
                     <Text style={styles.nameDescription}><View style={styles.isOnline}></View> Online agora</Text>
                 </View>
                 <Icon name="more-vert" size={35} color="#3b5998" />

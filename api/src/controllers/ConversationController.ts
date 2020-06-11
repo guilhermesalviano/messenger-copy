@@ -10,7 +10,7 @@ class ConversationController {
 
         const users = await knex('users')
             .whereIn('id', ids)
-            .select('*');
+            .select('id', 'name', 'avatar');
             
         response.json(users);
         

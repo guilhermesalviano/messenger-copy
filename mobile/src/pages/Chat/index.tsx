@@ -13,11 +13,11 @@ interface userActual {
 const Chat = () => {
     const route = useRoute();
     const user = route.params as userActual;
-    console.log(user);
+    // console.log(user);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ChatHeader />
+            <ChatHeader toUser={user} />
             {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios'? 'padding' : undefined}> */}
                 <ChatComposer user={user} />
             {/* </KeyboardAvoidingView> */}

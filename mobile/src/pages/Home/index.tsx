@@ -14,7 +14,7 @@ interface userActual {
 const Home = () => {
     const route = useRoute();
     const user = route.params as userActual;
-    console.log(user);
+    // console.log(user);
 
     return (
         <SafeAreaView style={styles.container}>
