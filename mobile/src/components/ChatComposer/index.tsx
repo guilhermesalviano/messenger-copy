@@ -38,7 +38,7 @@ const ChatComposer = (props: any) => {
             _id,
             createdAt: sentDate,
             text,
-            from_user_id: user._id,
+            from_user_id: props.user.id,
             to_user_id: props.toUser.id
         };
         // console.log(data);
@@ -63,9 +63,9 @@ const ChatComposer = (props: any) => {
                     text,
                     createdAt,
                     user: {
-                      _id: (_id === props.user.id? props.user.id: props.toUser.id),
-                      name: (_id === props.user.id? props.user.name: props.toUser.name),
-                      avatar: (_id === props.user.id? props.user.avatar: props.toUser.avatar),
+                      _id: (from_user_id === props.user.id? props.user.id: props.toUser.id),
+                      name: (from_user_id === props.user.id? props.user.name: props.toUser.name),
+                      avatar: (from_user_id === props.user.id? props.user.avatar: props.toUser.avatar),
                     },
                     image,
                     video,
@@ -94,7 +94,7 @@ const ChatComposer = (props: any) => {
                 messages={message}
                 onSend={onSend}
                 user={user}
-                loadEarlier={true}
+                loadEarlier={false}
                 scrollToBottom
                 onLongPressAvatar={user => alert(JSON.stringify(user))}
                 onPressAvatar={() => alert('short press')}

@@ -7,7 +7,8 @@ import api from '../../services/api';
 interface Conversation {
     id: number,
     name: string,
-    avatar: string
+    avatar: string,
+    text: string
 }
 
 const MessageList = (props: any) => {
@@ -31,7 +32,7 @@ const MessageList = (props: any) => {
         }).then(response =>{
             setConversations(response.data);
         })
-    }, [props.user])
+    });
 
     if (!conversations) {
         return <AppLoading />
@@ -47,7 +48,7 @@ const MessageList = (props: any) => {
                     />
                     <View  style={styles.containerText}>
                         <View style={styles.containerName}>
-                            <Text style={styles.name}>
+                            <Text style={conversation.id === props.user.id ? styles.nameSendMessage : styles.nameRecived}>
                                 {conversation.name}
                             </Text>
                             <Text style={styles.hour}>
@@ -55,7 +56,7 @@ const MessageList = (props: any) => {
                             </Text>
                         </View>
                         <Text style={styles.message}>
-                            Test
+                            {conversation.text}
                         </Text> 
                     </View>
                 </TouchableOpacity>
@@ -85,8 +86,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         justifyContent: 'space-between',
     },
-    name: {
-        fontSize: 20
+    nameRecived: {
+        fontSize: 20,
+        fontWeight: 'normal'
+    },
+    nameSendMessage: {
+        fontWeight: 'bold'
     },
     hour: {
         marginTop: 5,
