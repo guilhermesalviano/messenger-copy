@@ -6,9 +6,15 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import api from '../../services/api';
 // Sample: https://github.com/FaridSafi/react-native-gifted-chat/blob/master/App.tsx
 
-const ChatComposer = () => {
+interface User {
+    _id: number,
+    name: string,
+    avatar: string
+}
+
+const ChatComposer = (props: any) => {
     const [message, setMessage] = useState<IMessage[]>([]);
-    //load olds messages
+    const [user, setUser] = useState<User>();
 
     async function handleSendMessage(messages: IMessage[]) {
         const {_id, createdAt, received, sent, text, user} = { ...messages[0], sent: true, received: true };
@@ -21,15 +27,33 @@ const ChatComposer = () => {
             to_user_id: 2
         };
         await api.post('messages', data);
-        setMessage([messages[0],...message]);
+        // setMessage([messages[0],...message]);
         return;
     }
 
+    const onSend = async (newMessages= []) => {
+        // console.log(newMessages[0]);
+        const {_id, createdAt, received, sent, text, user} = { ...newMessages[0], sent: true, received: true };
+        const sentDate = `${new Date(createdAt).toISOString().replace('T', ' ').substring(0,(new Date(createdAt).toISOString().replace('T', ' ').length -5))}`;
+        const data = {
+            _id,
+            createdAt: sentDate,
+            text,
+            from_user_id: user._id,
+            to_user_id: 2
+        };
+        // console.log(data);
+        await api.post('messages', data);
+        setMessage((prevMessages) => GiftedChat.append(prevMessages, newMessages));
+    };
+
     useEffect(()=> {
+        const to_id = props.user.id === 1? 2 : 1;
+        
         api.get('/messages', {
             params: {
-                from_user_id: 1,
-                to_user_id: 2
+                from_user_id: props.user.id,
+                to_user_id: to_id
             }
         }).then(response => {
             const messages = response.data;
@@ -49,10 +73,18 @@ const ChatComposer = () => {
                     video,
                 });
             }
-            
             setMessage(oldMessages);
         })
-    }, []);
+    }, [setUser, GiftedChat.bind(GiftedChat)]);
+
+    useEffect(()=>{
+        const {id, name, avatar} = props.user;
+        setUser({
+            _id: id, 
+            name, 
+            avatar
+        });
+    },[])
 
     if (!message) {
         return <AppLoading />
@@ -62,16 +94,8 @@ const ChatComposer = () => {
         <View style={styles.container}>
             <GiftedChat
                 messages={message}
-                onSend={(messages) => handleSendMessage(messages)}
-                user={Platform.OS === 'ios'?{
-                    _id: 1,
-                    name: 'Guibs',
-                    avatar: 'https://placeimg.com/140/140/any',
-                }: {
-                    _id: 2,
-                    name: 'outro',
-                    avatar: 'https://facebook.github.io/react/img/logo_og.png',
-                }}
+                onSend={onSend}
+                user={user}
                 loadEarlier={false}
                 scrollToBottom
                 onLongPressAvatar={user => alert(JSON.stringify(user))}

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import api from '../../services/api';
 
-const MessageList = () => {
+const MessageList = (props: any) => {
     const navigation = useNavigation();
 
     function handleOpenChat() {
-        navigation.navigate('Chat');
+        navigation.navigate('Chat', props.user)
     }
 
     return (
@@ -19,7 +20,7 @@ const MessageList = () => {
                 <View style={styles.containerText}>
                     <View style={styles.containerName}>
                         <Text style={styles.name}>
-                            Jubiscleiton
+                            Alo
                         </Text>
                         <Text style={styles.hour}>
                             {new Date().getHours() < 12? new Date().getHours().toString()+ ' AM' : new Date().getHours().toString()+ ' PM' }

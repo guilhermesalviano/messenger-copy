@@ -6,7 +6,9 @@ class MessageController {
         const {from_user_id, to_user_id} = request.query;
         const messages = await knex('messages')
             .where('from_user_id', String(from_user_id))
+            .orWhere('from_user_id', String(to_user_id))
             .where('to_user_id', String(to_user_id))
+            .orWhere('to_user_id', String(from_user_id))
             .orderBy('createdAt', 'desc')
             // .limit(2)
             .select('*');
