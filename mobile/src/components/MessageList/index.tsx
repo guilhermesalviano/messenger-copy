@@ -14,13 +14,13 @@ const MessageList = (props: any) => {
     const navigation = useNavigation();
     const [conversations, setConversations] = useState<Conversation[]>([]);
 
-    function handleOpenChat(id: number) {
+    function handleOpenChat(conversation: Conversation) {
         // Object {
         //     "avatar": "https://placeimg.com/140/140/any",
         //     "id": 1,
         //     "name": "guilherme",
         //   }
-        navigation.navigate('Chat', props.user)
+        navigation.navigate('Chat', [props.user, conversation])
     }
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const MessageList = (props: any) => {
     return (
         <>
             {conversations.map(conversation => (
-                <TouchableOpacity key={String(conversation.id)} style={styles.container} onPress={() => handleOpenChat(conversation.id)}>    
+                <TouchableOpacity key={String(conversation.id)} style={styles.container} onPress={() => handleOpenChat(conversation)}>    
                     <Image
                         style={styles.tinyImageStory}
                         source={{uri: conversation.avatar}}

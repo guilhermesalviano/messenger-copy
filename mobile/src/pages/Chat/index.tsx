@@ -12,14 +12,15 @@ interface userActual {
 
 const Chat = () => {
     const route = useRoute();
-    const user = route.params as userActual;
-    // console.log(user);
+    const user = route.params[0] as userActual;
+    const userTo = route.params[1] as userActual;
+    // console.log(route.params);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ChatHeader toUser={user} />
+            <ChatHeader toUser={userTo} />
             {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios'? 'padding' : undefined}> */}
-                <ChatComposer user={user} />
+                <ChatComposer user={user} toUser={userTo} />
             {/* </KeyboardAvoidingView> */}
         </SafeAreaView>
     );

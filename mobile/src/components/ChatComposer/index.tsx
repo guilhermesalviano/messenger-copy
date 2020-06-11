@@ -24,7 +24,7 @@ const ChatComposer = (props: any) => {
             createdAt: sentDate,
             text,
             from_user_id: user._id,
-            to_user_id: 2
+            to_user_id: props.toUser.id
         };
         await api.post('messages', data);
         // setMessage([messages[0],...message]);
@@ -39,7 +39,7 @@ const ChatComposer = (props: any) => {
             createdAt: sentDate,
             text,
             from_user_id: user._id,
-            to_user_id: 2
+            to_user_id: props.toUser.id
         };
         // console.log(data);
         await api.post('messages', data);
@@ -47,12 +47,11 @@ const ChatComposer = (props: any) => {
     };
 
     useEffect(()=> {
-        const to_id = props.user.id === 1? 2 : 1;
         
         api.get('/messages', {
             params: {
                 from_user_id: props.user.id,
-                to_user_id: to_id
+                to_user_id: props.toUser.id
             }
         }).then(response => {
             const messages = response.data;
@@ -64,9 +63,9 @@ const ChatComposer = (props: any) => {
                     text,
                     createdAt,
                     user: {
-                      _id: from_user_id,
-                      name: 'React Native',
-                      avatar: 'https://scontent.fcgh34-1.fna.fbcdn.net/v/t1.0-9/98979178_1174596953001783_7408037421243170816_n.jpg?_nc_cat=101&_nc_sid=85a577&_nc_ohc=Fg254BlNaXkAX_Qo_Bj&_nc_ht=scontent.fcgh34-1.fna&oh=6173f69f224064eec9fcb5189e35c392&oe=5F06673F',
+                      _id: (_id === props.user.id? props.user.id: props.toUser.id),
+                      name: (_id === props.user.id? props.user.name: props.toUser.name),
+                      avatar: (_id === props.user.id? props.user.avatar: props.toUser.avatar),
                     },
                     image,
                     video,
@@ -95,7 +94,7 @@ const ChatComposer = (props: any) => {
                 messages={message}
                 onSend={onSend}
                 user={user}
-                loadEarlier={false}
+                loadEarlier={true}
                 scrollToBottom
                 onLongPressAvatar={user => alert(JSON.stringify(user))}
                 onPressAvatar={() => alert('short press')}
