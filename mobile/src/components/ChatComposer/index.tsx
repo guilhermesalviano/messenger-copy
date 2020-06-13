@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Platform } from 'react-native';
 import { AppLoading } from 'expo'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 
+import socketIo from '../../services/socket';
 import api from '../../services/api';
 // Sample: https://github.com/FaridSafi/react-native-gifted-chat/blob/master/App.tsx
 
@@ -15,39 +16,9 @@ interface User {
 const ChatComposer = (props: any) => {
     const [message, setMessage] = useState<IMessage[]>([]);
     const [user, setUser] = useState<User>();
+    const [messageCount, setMessageCount] = useState(0);
 
-    async function handleSendMessage(messages: IMessage[]) {
-        const {_id, createdAt, received, sent, text, user} = { ...messages[0], sent: true, received: true };
-        const sentDate = `${new Date(createdAt).toISOString().replace('T', ' ').substring(0,(new Date(createdAt).toISOString().replace('T', ' ').length -5))}`;
-        const data = {
-            _id,
-            createdAt: sentDate,
-            text,
-            from_user_id: user._id,
-            to_user_id: props.toUser.id
-        };
-        await api.post('messages', data);
-        // setMessage([messages[0],...message]);
-        return;
-    }
-
-    const onSend = async (newMessages: any) => {
-        const {_id, createdAt, received, sent, text, user} = { ...newMessages[0] as IMessage, sent: true, received: true };
-        const sentDate = `${new Date(createdAt).toISOString().replace('T', ' ').substring(0,(new Date(createdAt).toISOString().replace('T', ' ').length -5))}`;
-        const data = {
-            _id,
-            createdAt: sentDate,
-            text,
-            from_user_id: props.user.id,
-            to_user_id: props.toUser.id
-        };
-        // console.log(data);
-        await api.post('messages', data);
-        setMessage((prevMessages) => GiftedChat.append(prevMessages, newMessages));
-    };
-
-    useEffect(()=> {
-        
+    function handleLoadMessages() {
         api.get('/messages', {
             params: {
                 from_user_id: props.user.id,
@@ -73,7 +44,37 @@ const ChatComposer = (props: any) => {
             }
             setMessage(oldMessages);
         })
-    }, [setUser, GiftedChat.bind(GiftedChat)]);
+    }
+
+    const onSend = async (newMessages: any) => {
+        const {_id, createdAt, received, sent, text, user} = { ...newMessages[0] as IMessage, sent: true, received: true };
+        const sentDate = `${new Date(createdAt).toISOString().replace('T', ' ').substring(0,(new Date(createdAt).toISOString().replace('T', ' ').length -5))}`;
+        const data = {
+            _id,
+            createdAt: sentDate,
+            text,
+            from_user_id: props.user.id,
+            to_user_id: props.toUser.id
+        };
+        // console.log(data);
+        await api.post('messages', data);
+        setMessage((prevMessages) => GiftedChat.append(prevMessages, newMessages));
+        socketIo.on("new message", msg => {
+            console.log('enviado'+ msg);
+            handleLoadMessages();
+        })
+        socketIo.emit("new message", data);
+        setMessageCount(messageCount + 1);
+    };
+
+    socketIo.on('new message', msg => {
+        console.log('enviado'+ msg);
+        handleLoadMessages();
+    })
+
+    useEffect(()=> {
+        handleLoadMessages();
+    }, [setUser]);
 
     useEffect(()=>{
         const {id, name, avatar} = props.user;
