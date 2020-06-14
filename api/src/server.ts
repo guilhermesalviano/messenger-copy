@@ -9,8 +9,9 @@ const io = socket.listen(http);
 
 io.on("connection", socket => {
     console.log(`a user connected `);
-    socket.on('new message', data => {
+    socket.on('message', data => {
         console.log(data);
+        socket.broadcast.emit("sendMessage");
     });
 });
 

@@ -2,13 +2,12 @@ import io from 'socket.io-client';
 
 const socketIo = io('http://192.168.0.101:3333',{ 
     reconnection: true,
-    // reconnectionDelay: 500,
+    reconnectionDelay: 500,
     jsonp: true,
-    /*reconnectionAttempts: Infinity,
-    transports: ['websocket']*/
+    reconnectionAttempts: Infinity,
+    transports: ['websocket']
 });
-
-socketIo.on('new message', msg => {
+socketIo.on('connect', msg => {
     console.log('enviado'+ msg);
 })
 
