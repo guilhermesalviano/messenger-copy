@@ -3,7 +3,7 @@
 Este projeto foi desenvolvido como uma prova de conceito (PoC) para aprimorar habilidades em React Native, especialmente na integração e utilização de bibliotecas de chat, neste caso, o Socket.IO.
 
 ## demo:
-![messenger_copy](messenger_copy.gif)
+<img src="messenger_copy.gif" alt="messenger_copy" width="400px" />
 
 ## Objetivo
 
